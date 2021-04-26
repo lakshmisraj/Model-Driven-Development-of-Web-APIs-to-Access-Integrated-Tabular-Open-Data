@@ -1,0 +1,489 @@
+---
+swagger: "2.0"
+info:
+  description: "Obtaining the worldminushappinessminusreportminus2021csvworldminushappinessminusreportcsv"
+  version: "1.0.0"
+  title: "worldminushappinessminusreportminus2021csvworldminushappinessminusreportcsv"
+host: "localhost:8080"
+basePath: "/"
+schemes:
+- "http"
+paths:
+  /:
+    get:
+      summary: "GET worldminushappinessminusreportminus2021csvworldminushappinessminusreportcsv"
+      description: "Use value 'all' in a parameter for non-empty values"
+      operationId: "getworldminushappinessminusreportminus2021csvworldminushappinessminusreportcsv"
+      produces:
+      - "application/json"
+      - "text/html"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "Maximum number of results"
+        required: false
+        type: "integer"
+        default: 10000
+      - name: "offset"
+        in: "query"
+        description: "Starting index for results"
+        required: false
+        type: "integer"
+        default: 0
+      - name: "visualisation"
+        in: "query"
+        description: "Visualisation of the data via charts"
+        required: false
+        type: "string"
+      - name: "social_support_social_support"
+        in: "query"
+        description: "social_support_social_support"
+        required: false
+        type: "string"
+      - name: "generosity_generosity"
+        in: "query"
+        description: "generosity_generosity"
+        required: false
+        type: "string"
+      - name: "logged_gdp_per_capita_log_gdp_per_capita"
+        in: "query"
+        description: "logged_gdp_per_capita_log_gdp_per_capita"
+        required: false
+        type: "string"
+      - name: "explained_by_freedom_to_make_life_choices_negative_affect"
+        in: "query"
+        description: "explained_by_freedom_to_make_life_choices_negative_affect"
+        required: false
+        type: "string"
+      - name: "perceptions_of_corruption_perceptions_of_corruption"
+        in: "query"
+        description: "perceptions_of_corruption_perceptions_of_corruption"
+        required: false
+        type: "string"
+      - name: "explained_by_social_support_positive_affect"
+        in: "query"
+        description: "explained_by_social_support_positive_affect"
+        required: false
+        type: "string"
+      - name: "ladder_score_life_ladder"
+        in: "query"
+        description: "ladder_score_life_ladder"
+        required: false
+        type: "string"
+      - name: "freedom_to_make_life_choices_freedom_to_make_life_choices"
+        in: "query"
+        description: "freedom_to_make_life_choices_freedom_to_make_life_choices"
+        required: false
+        type: "string"
+      - name: "healthy_life_expectancy_healthy_life_expectancy_at_birth"
+        in: "query"
+        description: "healthy_life_expectancy_healthy_life_expectancy_at_birth"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+      x-swagger-router-controller: "Default"
+  /explained_by_freedom_to_make_life_choices_negative_affect/{explained_by_freedom_to_make_life_choices_negative_affect}:
+    get:
+      summary: "GET explained_by_freedom_to_make_life_choices_negative_affect"
+      description: "Use value 'all' in a parameter for non-empty values"
+      operationId: "getexplained_by_freedom_to_make_life_choices_negative_affect"
+      produces:
+      - "application/json"
+      - "text/html"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "Maximum number of results"
+        required: false
+        type: "integer"
+        default: 10000
+      - name: "offset"
+        in: "query"
+        description: "Starting index for results"
+        required: false
+        type: "integer"
+        default: 0
+      - name: "visualisation"
+        in: "query"
+        description: "Visualisation of the data via charts"
+        required: false
+        type: "string"
+      - name: "explained_by_freedom_to_make_life_choices_negative_affect"
+        in: "path"
+        description: "explained_by_freedom_to_make_life_choices_negative_affect"
+        required: true
+        type: "string"
+        default: "0.691"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+      x-swagger-router-controller: "Default"
+  /explained_by_social_support_positive_affect/{explained_by_social_support_positive_affect}:
+    get:
+      summary: "GET explained_by_social_support_positive_affect"
+      description: "Use value 'all' in a parameter for non-empty values"
+      operationId: "getexplained_by_social_support_positive_affect"
+      produces:
+      - "application/json"
+      - "text/html"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "Maximum number of results"
+        required: false
+        type: "integer"
+        default: 10000
+      - name: "offset"
+        in: "query"
+        description: "Starting index for results"
+        required: false
+        type: "integer"
+        default: 0
+      - name: "visualisation"
+        in: "query"
+        description: "Visualisation of the data via charts"
+        required: false
+        type: "string"
+      - name: "explained_by_social_support_positive_affect"
+        in: "path"
+        description: "explained_by_social_support_positive_affect"
+        required: true
+        type: "string"
+        default: "1.106"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+      x-swagger-router-controller: "Default"
+  /freedom_to_make_life_choices_freedom_to_make_life_choices/{freedom_to_make_life_choices_freedom_to_make_life_choices}:
+    get:
+      summary: "GET freedom_to_make_life_choices_freedom_to_make_life_choices"
+      description: "Use value 'all' in a parameter for non-empty values"
+      operationId: "getfreedom_to_make_life_choices_freedom_to_make_life_choices"
+      produces:
+      - "application/json"
+      - "text/html"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "Maximum number of results"
+        required: false
+        type: "integer"
+        default: 10000
+      - name: "offset"
+        in: "query"
+        description: "Starting index for results"
+        required: false
+        type: "integer"
+        default: 0
+      - name: "visualisation"
+        in: "query"
+        description: "Visualisation of the data via charts"
+        required: false
+        type: "string"
+      - name: "freedom_to_make_life_choices_freedom_to_make_life_choices"
+        in: "path"
+        description: "freedom_to_make_life_choices_freedom_to_make_life_choices"
+        required: true
+        type: "string"
+        default: "0.949"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+      x-swagger-router-controller: "Default"
+  /generosity_generosity/{generosity_generosity}:
+    get:
+      summary: "GET generosity_generosity"
+      description: "Use value 'all' in a parameter for non-empty values"
+      operationId: "getgenerosity_generosity"
+      produces:
+      - "application/json"
+      - "text/html"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "Maximum number of results"
+        required: false
+        type: "integer"
+        default: 10000
+      - name: "offset"
+        in: "query"
+        description: "Starting index for results"
+        required: false
+        type: "integer"
+        default: 0
+      - name: "visualisation"
+        in: "query"
+        description: "Visualisation of the data via charts"
+        required: false
+        type: "string"
+      - name: "generosity_generosity"
+        in: "path"
+        description: "generosity_generosity"
+        required: true
+        type: "string"
+        default: "-0.098"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+      x-swagger-router-controller: "Default"
+  /healthy_life_expectancy_healthy_life_expectancy_at_birth/{healthy_life_expectancy_healthy_life_expectancy_at_birth}:
+    get:
+      summary: "GET healthy_life_expectancy_healthy_life_expectancy_at_birth"
+      description: "Use value 'all' in a parameter for non-empty values"
+      operationId: "gethealthy_life_expectancy_healthy_life_expectancy_at_birth"
+      produces:
+      - "application/json"
+      - "text/html"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "Maximum number of results"
+        required: false
+        type: "integer"
+        default: 10000
+      - name: "offset"
+        in: "query"
+        description: "Starting index for results"
+        required: false
+        type: "integer"
+        default: 0
+      - name: "visualisation"
+        in: "query"
+        description: "Visualisation of the data via charts"
+        required: false
+        type: "string"
+      - name: "healthy_life_expectancy_healthy_life_expectancy_at_birth"
+        in: "path"
+        description: "healthy_life_expectancy_healthy_life_expectancy_at_birth"
+        required: true
+        type: "string"
+        default: "72.0"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+      x-swagger-router-controller: "Default"
+  /ladder_score_life_ladder/{ladder_score_life_ladder}:
+    get:
+      summary: "GET ladder_score_life_ladder"
+      description: "Use value 'all' in a parameter for non-empty values"
+      operationId: "getladder_score_life_ladder"
+      produces:
+      - "application/json"
+      - "text/html"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "Maximum number of results"
+        required: false
+        type: "integer"
+        default: 10000
+      - name: "offset"
+        in: "query"
+        description: "Starting index for results"
+        required: false
+        type: "integer"
+        default: 0
+      - name: "visualisation"
+        in: "query"
+        description: "Visualisation of the data via charts"
+        required: false
+        type: "string"
+      - name: "ladder_score_life_ladder"
+        in: "path"
+        description: "ladder_score_life_ladder"
+        required: true
+        type: "string"
+        default: "7.842"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+      x-swagger-router-controller: "Default"
+  /logged_gdp_per_capita_log_gdp_per_capita/{logged_gdp_per_capita_log_gdp_per_capita}:
+    get:
+      summary: "GET logged_gdp_per_capita_log_gdp_per_capita"
+      description: "Use value 'all' in a parameter for non-empty values"
+      operationId: "getlogged_gdp_per_capita_log_gdp_per_capita"
+      produces:
+      - "application/json"
+      - "text/html"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "Maximum number of results"
+        required: false
+        type: "integer"
+        default: 10000
+      - name: "offset"
+        in: "query"
+        description: "Starting index for results"
+        required: false
+        type: "integer"
+        default: 0
+      - name: "visualisation"
+        in: "query"
+        description: "Visualisation of the data via charts"
+        required: false
+        type: "string"
+      - name: "logged_gdp_per_capita_log_gdp_per_capita"
+        in: "path"
+        description: "logged_gdp_per_capita_log_gdp_per_capita"
+        required: true
+        type: "string"
+        default: "10.775"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+      x-swagger-router-controller: "Default"
+  /perceptions_of_corruption_perceptions_of_corruption/{perceptions_of_corruption_perceptions_of_corruption}:
+    get:
+      summary: "GET perceptions_of_corruption_perceptions_of_corruption"
+      description: "Use value 'all' in a parameter for non-empty values"
+      operationId: "getperceptions_of_corruption_perceptions_of_corruption"
+      produces:
+      - "application/json"
+      - "text/html"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "Maximum number of results"
+        required: false
+        type: "integer"
+        default: 10000
+      - name: "offset"
+        in: "query"
+        description: "Starting index for results"
+        required: false
+        type: "integer"
+        default: 0
+      - name: "visualisation"
+        in: "query"
+        description: "Visualisation of the data via charts"
+        required: false
+        type: "string"
+      - name: "perceptions_of_corruption_perceptions_of_corruption"
+        in: "path"
+        description: "perceptions_of_corruption_perceptions_of_corruption"
+        required: true
+        type: "string"
+        default: "0.186"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+      x-swagger-router-controller: "Default"
+  /social_support_social_support/{social_support_social_support}:
+    get:
+      summary: "GET social_support_social_support"
+      description: "Use value 'all' in a parameter for non-empty values"
+      operationId: "getsocial_support_social_support"
+      produces:
+      - "application/json"
+      - "text/html"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "Maximum number of results"
+        required: false
+        type: "integer"
+        default: 10000
+      - name: "offset"
+        in: "query"
+        description: "Starting index for results"
+        required: false
+        type: "integer"
+        default: 0
+      - name: "visualisation"
+        in: "query"
+        description: "Visualisation of the data via charts"
+        required: false
+        type: "string"
+      - name: "social_support_social_support"
+        in: "path"
+        description: "social_support_social_support"
+        required: true
+        type: "string"
+        default: "0.954"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+      x-swagger-router-controller: "Default"
+  /visualisation:
+    get:
+      summary: "GET visualisation charts"
+      description: "Get visualisation charts of the data"
+      operationId: "getvisualisation"
+      produces:
+      - "text/html"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "Maximum number of results"
+        required: false
+        type: "integer"
+        default: 10000
+      - name: "offset"
+        in: "query"
+        description: "Starting index for results"
+        required: false
+        type: "integer"
+        default: 0
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+      x-swagger-router-controller: "Default"
+definitions:
+  mainComponent:
+    type: "object"
+    properties:
+      healthy_life_expectancy_healthy_life_expectancy_at_birth:
+        type: "string"
+        example: "72"
+      ladder_score_life_ladder:
+        type: "string"
+        example: "7.842"
+      explained_by_social_support_positive_affect:
+        type: "string"
+        example: "1.106"
+      freedom_to_make_life_choices_freedom_to_make_life_choices:
+        type: "string"
+        example: "0.949"
+      generosity_generosity:
+        type: "string"
+        example: "-0.098"
+      perceptions_of_corruption_perceptions_of_corruption:
+        type: "string"
+        example: "0.186"
+      social_support_social_support:
+        type: "string"
+        example: "0.954"
+      explained_by_freedom_to_make_life_choices_negative_affect:
+        type: "string"
+        example: "0.691"
+      logged_gdp_per_capita_log_gdp_per_capita:
+        type: "string"
+        example: "10.775"
+    xml:
+      name: "mainComponent"

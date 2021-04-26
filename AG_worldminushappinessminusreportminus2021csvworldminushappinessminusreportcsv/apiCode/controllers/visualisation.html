@@ -1,0 +1,476 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Data Visualisation Charts</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+	<style>
+	canvas{
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+	</style>
+</head>
+
+<body>
+	<div style="width:80%;margin: 0 auto;">
+		<canvas id="canvasLine"></canvas>
+	</div>
+	<br>
+	<br>
+	<div style="width:80%;margin: 0 auto;">
+		<canvas id="canvasBar"></canvas>
+	</div>
+	<br>
+	<br>
+	<div id="canvas-holder" style="width:50%;margin: 0 auto;">
+		<canvas id="chart-area"></canvas>
+	</div>
+	<label id="pieChartLabel"></label>
+	<br>
+	<br>
+	<script>
+		window.chartColors = {
+			red: 'rgb(255, 99, 132)',
+			orange: 'rgb(255, 159, 64)',
+			yellow: 'rgb(255, 205, 86)',
+			green: 'rgb(75, 192, 192)',
+			blue: 'rgb(54, 162, 235)',
+			purple: 'rgb(153, 102, 255)',
+			grey: 'rgb(201, 203, 207)'
+		};
+		var colorsArray = [
+			window.chartColors.red,
+			window.chartColors.orange,
+			window.chartColors.yellow,
+			window.chartColors.green,
+			window.chartColors.blue,
+		];
+		var color = Chart.helpers.color;
+		var configLine = {
+			type: 'line',
+			data: {
+				labels: [
+					labelsLineChart
+				],
+				datasets: [
+					
+				]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Chart.js Line Chart'
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+				scales: {
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Id'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Value'
+						}
+					}]
+				}
+			}
+		};
+
+		
+		var barChartData = {
+			labels: [
+				labelsBarChart
+			],
+			datasets: [
+				
+			]
+
+		};
+
+		var configBar = {
+			type: 'bar',
+			data: barChartData,
+			options: {
+				responsive: true,
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: true,
+					text: 'Chart.js Bar Chart'
+				}
+			}
+		};
+
+		var configPie0 = {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: [ 						dataPieChart
+					],
+					backgroundColor: [
+						window.chartColors.red,
+						window.chartColors.orange,
+						window.chartColors.yellow,
+						window.chartColors.green,
+						window.chartColors.blue,
+					],
+					label: 'social_support_social_support'
+				}				],
+				labels: [
+					labelsPieChart
+				]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Chart.js Pie Chart (social_support_social_support)'
+				}			}
+		};
+
+</script>
+
+<button id="pieChartButton0">PieChart social_support_social_support</button>
+
+<script>
+
+		document.getElementById('pieChartButton0').addEventListener('click', function() {
+			var pie = document.getElementById('chart-area').getContext('2d');
+			window.myPie = new Chart(pie, configPie0);
+		});
+
+var configPie1 = {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: [ 						dataPieChart
+					],
+					backgroundColor: [
+						window.chartColors.red,
+						window.chartColors.orange,
+						window.chartColors.yellow,
+						window.chartColors.green,
+						window.chartColors.blue,
+					],
+					label: 'generosity_generosity'
+				}				],
+				labels: [
+					labelsPieChart
+				]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Chart.js Pie Chart (generosity_generosity)'
+				}			}
+		};
+
+</script>
+
+<button id="pieChartButton1">PieChart generosity_generosity</button>
+
+<script>
+
+		document.getElementById('pieChartButton1').addEventListener('click', function() {
+			var pie = document.getElementById('chart-area').getContext('2d');
+			window.myPie = new Chart(pie, configPie1);
+		});
+
+var configPie2 = {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: [ 						dataPieChart
+					],
+					backgroundColor: [
+						window.chartColors.red,
+						window.chartColors.orange,
+						window.chartColors.yellow,
+						window.chartColors.green,
+						window.chartColors.blue,
+					],
+					label: 'logged_gdp_per_capita_log_gdp_per_capita'
+				}				],
+				labels: [
+					labelsPieChart
+				]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Chart.js Pie Chart (logged_gdp_per_capita_log_gdp_per_capita)'
+				}			}
+		};
+
+</script>
+
+<button id="pieChartButton2">PieChart logged_gdp_per_capita_log_gdp_per_capita</button>
+
+<script>
+
+		document.getElementById('pieChartButton2').addEventListener('click', function() {
+			var pie = document.getElementById('chart-area').getContext('2d');
+			window.myPie = new Chart(pie, configPie2);
+		});
+
+var configPie3 = {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: [ 						dataPieChart
+					],
+					backgroundColor: [
+						window.chartColors.red,
+						window.chartColors.orange,
+						window.chartColors.yellow,
+						window.chartColors.green,
+						window.chartColors.blue,
+					],
+					label: 'explained_by_freedom_to_make_life_choices_negative_affect'
+				}				],
+				labels: [
+					labelsPieChart
+				]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Chart.js Pie Chart (explained_by_freedom_to_make_life_choices_negative_affect)'
+				}			}
+		};
+
+</script>
+
+<button id="pieChartButton3">PieChart explained_by_freedom_to_make_life_choices_negative_affect</button>
+
+<script>
+
+		document.getElementById('pieChartButton3').addEventListener('click', function() {
+			var pie = document.getElementById('chart-area').getContext('2d');
+			window.myPie = new Chart(pie, configPie3);
+		});
+
+var configPie4 = {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: [ 						dataPieChart
+					],
+					backgroundColor: [
+						window.chartColors.red,
+						window.chartColors.orange,
+						window.chartColors.yellow,
+						window.chartColors.green,
+						window.chartColors.blue,
+					],
+					label: 'perceptions_of_corruption_perceptions_of_corruption'
+				}				],
+				labels: [
+					labelsPieChart
+				]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Chart.js Pie Chart (perceptions_of_corruption_perceptions_of_corruption)'
+				}			}
+		};
+
+</script>
+
+<button id="pieChartButton4">PieChart perceptions_of_corruption_perceptions_of_corruption</button>
+
+<script>
+
+		document.getElementById('pieChartButton4').addEventListener('click', function() {
+			var pie = document.getElementById('chart-area').getContext('2d');
+			window.myPie = new Chart(pie, configPie4);
+		});
+
+var configPie5 = {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: [ 						dataPieChart
+					],
+					backgroundColor: [
+						window.chartColors.red,
+						window.chartColors.orange,
+						window.chartColors.yellow,
+						window.chartColors.green,
+						window.chartColors.blue,
+					],
+					label: 'explained_by_social_support_positive_affect'
+				}				],
+				labels: [
+					labelsPieChart
+				]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Chart.js Pie Chart (explained_by_social_support_positive_affect)'
+				}			}
+		};
+
+</script>
+
+<button id="pieChartButton5">PieChart explained_by_social_support_positive_affect</button>
+
+<script>
+
+		document.getElementById('pieChartButton5').addEventListener('click', function() {
+			var pie = document.getElementById('chart-area').getContext('2d');
+			window.myPie = new Chart(pie, configPie5);
+		});
+
+var configPie6 = {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: [ 						dataPieChart
+					],
+					backgroundColor: [
+						window.chartColors.red,
+						window.chartColors.orange,
+						window.chartColors.yellow,
+						window.chartColors.green,
+						window.chartColors.blue,
+					],
+					label: 'ladder_score_life_ladder'
+				}				],
+				labels: [
+					labelsPieChart
+				]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Chart.js Pie Chart (ladder_score_life_ladder)'
+				}			}
+		};
+
+</script>
+
+<button id="pieChartButton6">PieChart ladder_score_life_ladder</button>
+
+<script>
+
+		document.getElementById('pieChartButton6').addEventListener('click', function() {
+			var pie = document.getElementById('chart-area').getContext('2d');
+			window.myPie = new Chart(pie, configPie6);
+		});
+
+var configPie7 = {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: [ 						dataPieChart
+					],
+					backgroundColor: [
+						window.chartColors.red,
+						window.chartColors.orange,
+						window.chartColors.yellow,
+						window.chartColors.green,
+						window.chartColors.blue,
+					],
+					label: 'freedom_to_make_life_choices_freedom_to_make_life_choices'
+				}				],
+				labels: [
+					labelsPieChart
+				]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Chart.js Pie Chart (freedom_to_make_life_choices_freedom_to_make_life_choices)'
+				}			}
+		};
+
+</script>
+
+<button id="pieChartButton7">PieChart freedom_to_make_life_choices_freedom_to_make_life_choices</button>
+
+<script>
+
+		document.getElementById('pieChartButton7').addEventListener('click', function() {
+			var pie = document.getElementById('chart-area').getContext('2d');
+			window.myPie = new Chart(pie, configPie7);
+		});
+
+var configPie8 = {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: [ 						dataPieChart
+					],
+					backgroundColor: [
+						window.chartColors.red,
+						window.chartColors.orange,
+						window.chartColors.yellow,
+						window.chartColors.green,
+						window.chartColors.blue,
+					],
+					label: 'healthy_life_expectancy_healthy_life_expectancy_at_birth'
+				}				],
+				labels: [
+					labelsPieChart
+				]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Chart.js Pie Chart (healthy_life_expectancy_healthy_life_expectancy_at_birth)'
+				}			}
+		};
+
+</script>
+
+<button id="pieChartButton8">PieChart healthy_life_expectancy_healthy_life_expectancy_at_birth</button>
+
+<script>
+
+		document.getElementById('pieChartButton8').addEventListener('click', function() {
+			var pie = document.getElementById('chart-area').getContext('2d');
+			window.myPie = new Chart(pie, configPie8);
+		});
+
+
+
+		window.onload = function() {
+			var canvasLine = document.getElementById('canvasLine').getContext('2d');
+			window.myLine = new Chart(canvasLine, configLine);
+			var canvasBar = document.getElementById('canvasBar').getContext('2d');
+			window.myLine = new Chart(canvasBar, configBar);
+			var pie = document.getElementById('chart-area').getContext('2d');
+			window.myPie = new Chart(pie, configPie0);
+		};
+	</script>
+</body>
+
+</html>
+

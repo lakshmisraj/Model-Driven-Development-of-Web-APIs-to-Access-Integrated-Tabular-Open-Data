@@ -1,0 +1,478 @@
+-- @atlcompiler emftvm
+-- @path Table=/TransformationRules/Table.ecore
+-- @path Openapi=/TransformationRules/Openapi.ecore
+
+module Table2Openapi;
+
+create OUT: Openapi from IN: Table;
+
+rule Main {
+	from
+		s: Table!Table
+	using {
+			firstTableRow : Sequence(Table!Cell) = s.rows->first().cells;
+			lastTableRow : Sequence(Table!Cell) = s.rows->last().cells;
+	}
+	to
+		t: Openapi!API (
+			openapi <- '3.0.0',
+			info <- openapi_info,
+			servers <- Sequence{openapi_servers},
+			paths <- Sequence{openapi_basic_path, openapi_visualisation_path}
+				.union(firstTableRow -> collect(e | thisModule.OpenapiPaths(e, s))),
+			components <- Sequence{openapi_components}
+		),
+		openapi_info: Openapi!Info (
+			title <- s.filename,
+			version <- '1.0.0',
+			description <- 'Obtaining the ' + s.filename
+		),
+		openapi_servers: Openapi!Server (
+			url <- 'http://localhost:8080'
+		),
+		openapi_basic_path: Openapi!Path (
+			pattern <- '/' ,
+			get <- Sequence{path_operation_basic_get}
+		),
+		openapi_visualisation_path: Openapi!Path (
+			pattern <- '/visualisation' ,
+			get <- Sequence{path_operation_visualisation_get}
+		),
+		
+		path_operation_visualisation_get: Openapi!Operation (
+			summary <- 'GET visualisation charts',
+			operationId <- 'getvisualisation',
+			description <- 'Get visualisation charts of the data',
+			responses <- thisModule.OperationResponsesVisualisation(firstTableRow->first()),
+			parameters <- Sequence{thisModule.OperationParameterLimit(firstTableRow->first()), 
+				thisModule.OperationParameterOffset(firstTableRow->first())}
+		),
+		-- Lazy rule instead of foreach
+		--openapi_paths: distinct Openapi!Path foreach (cell in firstTableRow)(
+		--	pattern <- '/' + cell.value + '/{' + cell.value + '}',
+		--	get <- path_operation->at(firstTableRow->indexOf(cell))
+		--),
+		openapi_components: Openapi!Component (
+			schemas <- component_schema
+		),
+		component_schema: Openapi!Schemas (
+			mainComponent <- main_component
+		),
+		main_component: Openapi!MainComponent (
+			type <- 'object',
+			xml <- xml_component,
+			properties <- firstTableRow -> collect(e | thisModule.SchemaProperties(e, s))
+		),
+		xml_component: Openapi!Xml(
+			name <- 'mainComponent'	
+		),
+		--schema_properties: distinct Openapi!Property foreach (cell in firstTableRow) (
+		--	name <- cell.value,
+		--	content <- property_content->at(firstTableRow->indexOf(cell))
+		--),
+		--property_content: distinct Openapi!PropertyContent foreach (cell in firstTableRow)(
+		--	type <- lastTableRow->at(firstTableRow->indexOf(cell)).type,
+		--	example <- lastTableRow->at(firstTableRow->indexOf(cell)).value
+		--),
+		path_operation_basic_get: Openapi!Operation (
+			summary <- 'GET ' + s.filename,
+			operationId <- 'get' + s.filename,
+			description <- 'Use value \'all\' in a parameter for non-empty values',
+			responses <- operation_responses_basic,
+			parameters <- Sequence{operation_parameter_limit, operation_parameter_offset, operation_parameter_visualisation}
+				.union(firstTableRow -> collect(e | thisModule.OperationParametersBasic(e, s)))
+		),
+		operation_parameter_limit: Openapi!Parameter (
+				in <- 'query',
+				name <- 'limit',
+				example <- '10000',
+				description <- 'Maximum number of results',
+				schema <- operation_parameter_limit_schema
+		),
+		operation_parameter_limit_schema: Openapi!Schema (
+				type <- 'integer'
+		),
+		operation_parameter_offset: Openapi!Parameter (
+				in <- 'query',
+				name <- 'offset',
+				example <- '0',
+				description <- 'Starting index for results',
+				schema <- operation_parameter_offset_schema
+		),
+		operation_parameter_offset_schema: Openapi!Schema (
+				type <- 'integer'
+		),
+		operation_parameter_visualisation: Openapi!Parameter (
+				in <- 'query',
+				name <- 'visualisation',
+				description <- 'Visualisation of the data via charts',
+				schema <- operation_parameter_visualisation_schema
+		),
+		operation_parameter_visualisation_schema: Openapi!Schema (
+				type <- 'string'
+		),
+		--path_operation: distinct Openapi!Operation foreach (cell in firstTableRow) (
+		--	summary <- 'GET ' + cell.value,
+		--	operationId <- 'get' + cell.value,
+		--	description <- 'Use value \'all\' in a parameter for non-empty values',
+		--	responses <- operation_responses->at(firstTableRow->indexOf(cell)),
+		--	parameters <- operation_parameters
+		--),
+		operation_responses_basic: Openapi!Response (
+			code <- '200',
+			responseCode <- response_code_basic
+		),
+		--operation_responses: distinct Openapi!Response foreach (cell in firstTableRow) (
+		--	code <- '200',
+		--	responseCode <- response_code->at(firstTableRow->indexOf(cell))
+		--),
+		response_code_basic: Openapi!ResponseCode (
+			description <- 'successful operation',
+			content <- Sequence{response_content_basic, thisModule.ResponseContentVisualisation(firstTableRow->first())}
+		),
+		--response_code: distinct Openapi!ResponseCode foreach (cell in firstTableRow) (
+		--	description <- 'successful operation',
+		--	content <- response_content->at(firstTableRow->indexOf(cell))
+		--),
+		response_content_basic: Openapi!ResponseContent (
+			contentTypeName <- 'application/json',
+			contentType <- response_content_type_basic
+		),
+		--response_content: distinct Openapi!ResponseContent foreach (cell in firstTableRow) (
+		--	contentTypeName <- 'application/json',
+		--	contentType <- response_content_type->at(firstTableRow->indexOf(cell))
+		--),
+		response_content_type_basic: Openapi!ResponseContentType (
+			schema <- response_schema_basic	
+		),
+		--response_content_type: distinct Openapi!ResponseContentType foreach (cell in firstTableRow) (
+		--	schema <- response_schema->at(firstTableRow->indexOf(cell))
+		--),
+		response_schema_basic: Openapi!Schema (
+			type <- 'array',
+			items <- Sequence{schema_items_basic}
+		),
+		--response_schema: distinct Openapi!Schema foreach (cell in firstTableRow) (
+		--	type <- 'array',
+		--	items <- schema_items->at(firstTableRow->indexOf(cell))
+		--),
+		schema_items_basic: Openapi!Item (
+			ref <- '#/components/schemas/mainComponent'
+		)--,
+		--schema_items: distinct Openapi!Item foreach (cell in firstTableRow) (
+		--	ref <- '#/components/schemas/mainComponent'	
+		--),
+		--operation_parameters_basic_get: distinct Openapi!Parameter foreach (cell in firstTableRow)(
+		--		in <- 'query',
+		--		name <- cell.value,
+		--		description <- cell.value,
+		--		schema <- parameter_schema_basic->at(firstTableRow->indexOf(cell))
+		--),
+		--operation_parameters: distinct Openapi!Parameter foreach (cell in firstTableRow)(
+		--		in <- 'path',
+		--		name <- cell.value,
+		--		description <- cell.value,
+		--		schema <- parameter_schema->at(firstTableRow->indexOf(cell)),
+		--		required <- true
+		--),
+		--parameter_schema_basic: distinct Openapi!Schema foreach (cell in firstTableRow)(
+		--		type <- cell.type
+		--),
+		--parameter_schema: distinct Openapi!Schema foreach (cell in firstTableRow)(
+		--		type <- cell.type
+		--)
+}
+
+lazy rule OpenapiPaths {
+	from
+		cell: Table!Cell,
+		table: Table!Table
+	using {
+			firstTableRow : Sequence(Table!Cell) = table.rows->first().cells;
+	}
+	to
+		openapi_paths: Openapi!Path (
+			pattern <- '/' + cell.value + '/{' + cell.value + '}',
+			get <- Sequence{thisModule.PathOperation(cell, table)}
+		)
+	
+}
+
+lazy rule PathOperation {
+	from
+		cell: Table!Cell,
+		table: Table!Table
+	using {
+			firstTableRow : Sequence(Table!Cell) = table.rows->first().cells;
+	}
+	to
+		path_operation: Openapi!Operation (
+			summary <- 'GET ' + cell.value,
+			operationId <- 'get' + cell.value,
+			description <- 'Use value \'all\' in a parameter for non-empty values',
+			responses <- thisModule.OperationResponses(cell),
+			parameters <- Sequence{thisModule.OperationParameterLimit(cell), 
+				thisModule.OperationParameterOffset(cell), thisModule.OperationParameterVisualisation(cell), 
+				thisModule.OperationParameters(cell, table)}
+		)
+}
+
+lazy rule OperationResponsesVisualisation {
+	from
+		cell: Table!Cell
+	to
+		operation_responses: Openapi!Response (
+			code <- '200',
+			responseCode <- thisModule.ResponseCodeVisualisation(cell)
+		)
+}
+
+lazy rule ResponseCodeVisualisation {
+	from
+		cell: Table!Cell
+	to
+		response_code: Openapi!ResponseCode (
+			description <- 'successful operation',
+			content <- Sequence{thisModule.ResponseContentVisualisation(cell)}
+		)
+}
+
+lazy rule ResponseContentVisualisation {
+	from
+		cell: Table!Cell
+	to
+		response_content: Openapi!ResponseContent (
+			contentTypeName <- 'text/html',
+			contentType <- thisModule.ResponseContentTypeVisualisation(cell)
+		)
+}
+
+lazy rule ResponseContentTypeVisualisation {
+	from
+		cell: Table!Cell
+	to
+		response_content_type: Openapi!ResponseContentType (
+			schema <- thisModule.ResponseSchemaVisualisation(cell)
+		)
+}
+
+lazy rule ResponseSchemaVisualisation {
+	from
+		cell: Table!Cell
+	to
+		response_schema: Openapi!Schema (
+			type <- 'string'
+		)
+}
+
+lazy rule OperationResponses {
+	from
+		cell: Table!Cell
+	to
+		operation_responses: Openapi!Response (
+			code <- '200',
+			responseCode <- thisModule.ResponseCode(cell)
+		)
+}
+
+lazy rule ResponseCode {
+	from
+		cell: Table!Cell
+	to
+		response_code: Openapi!ResponseCode (
+			description <- 'successful operation',
+			content <- Sequence{thisModule.ResponseContent(cell), thisModule.ResponseContentVisualisation(cell)}
+		)
+}
+
+lazy rule ResponseContent {
+	from
+		cell: Table!Cell
+	to
+		response_content: Openapi!ResponseContent (
+			contentTypeName <- 'application/json',
+			contentType <- thisModule.ResponseContentType(cell)
+		)
+}
+
+lazy rule ResponseContentType {
+	from
+		cell: Table!Cell
+	to
+		response_content_type: Openapi!ResponseContentType (
+			schema <- thisModule.ResponseSchema(cell)
+		)
+}
+
+lazy rule ResponseSchema {
+	from
+		cell: Table!Cell
+	to
+		response_schema: Openapi!Schema (
+			type <- 'array',
+			items <- Sequence{ thisModule.SchemaItems(cell) }
+		)
+}
+
+lazy rule SchemaItems {
+	from
+		cell: Table!Cell
+	to
+		schema_items: Openapi!Item (
+			ref <- '#/components/schemas/mainComponent'	
+		)
+}
+
+lazy rule OperationParametersBasic {
+	from 
+		cell: Table!Cell,
+		table: Table!Table
+	to
+		operation_parameters_basic_get: Openapi!Parameter (
+				in <- 'query',
+				name <- cell.value,
+				description <- cell.value,
+				schema <- thisModule.ParameterSchemaBasic(cell, table)
+		)
+}
+
+lazy rule ParameterSchemaBasic {
+	from 
+		cell: Table!Cell,
+		table: Table!Table
+	using {
+			firstTableRow : Sequence(Table!Cell) = table.rows->first().cells;
+			lastTableRow : Sequence(Table!Cell) = table.rows->last().cells;
+	}
+	to
+		parameter_schema_basic: Openapi!Schema (
+				type <- if lastTableRow->size() < firstTableRow->size() 
+				then cell.type
+				else lastTableRow->at(firstTableRow->indexOf(cell)).type
+				endif
+		)
+}
+
+lazy rule OperationParameters {
+	from 
+		cell: Table!Cell,
+		table: Table!Table
+	to
+		operation_parameters: Openapi!Parameter (
+				in <- 'path',
+				name <- cell.value,
+				description <- cell.value,
+				schema <- thisModule.ParameterSchema(cell, table),
+				required <- true
+		)
+}
+
+lazy rule OperationParameterLimit {
+	from 
+		cell: Table!Cell
+	to
+		operation_parameters: Openapi!Parameter (
+				in <- 'query',
+				name <- 'limit',
+				example <- '10000',
+				description <- 'Maximum number of results',
+				schema <- thisModule.ParameterSchemaLimit(cell)
+		)
+}
+
+lazy rule OperationParameterOffset {
+	from 
+		cell: Table!Cell
+	to
+		operation_parameters: Openapi!Parameter (
+				in <- 'query',
+				name <- 'offset',
+				example <- '0',
+				description <- 'Starting index for results',
+				schema <- thisModule.ParameterSchemaOffset(cell)
+		)
+}
+
+lazy rule OperationParameterVisualisation {
+	from 
+		cell: Table!Cell
+	to
+		operation_parameters: Openapi!Parameter (
+				in <- 'query',
+				name <- 'visualisation',
+				description <- 'Visualisation of the data via charts',
+				schema <- thisModule.ParameterSchemaVisualisation(cell)
+		)
+}
+
+lazy rule ParameterSchema {
+	from
+		cell: Table!Cell,
+		table: Table!Table
+	using {
+			firstTableRow : Sequence(Table!Cell) = table.rows->first().cells;
+			lastTableRow : Sequence(Table!Cell) = table.rows->last().cells;
+	}
+	to
+		parameter_schema: Openapi!Schema (
+				type <- if lastTableRow->size() < firstTableRow->size() 
+				then cell.type
+				else lastTableRow->at(firstTableRow->indexOf(cell)).type
+				endif
+		)
+}
+
+lazy rule ParameterSchemaLimit {
+	from
+		cell: Table!Cell
+	to
+		parameter_schema: Openapi!Schema (
+				type <- 'integer'
+		)
+}
+
+lazy rule ParameterSchemaOffset {
+	from
+		cell: Table!Cell
+	to
+		parameter_schema: Openapi!Schema (
+				type <- 'integer'
+		)
+}
+
+lazy rule ParameterSchemaVisualisation {
+	from
+		cell: Table!Cell
+	to
+		parameter_schema: Openapi!Schema (
+				type <- 'string'
+		)
+}
+
+lazy rule SchemaProperties {
+	from
+		cell: Table!Cell,
+		table: Table!Table
+	using {
+			firstTableRow : Sequence(Table!Cell) = table.rows->first().cells;
+			lastTableRow : Sequence(Table!Cell) = table.rows->last().cells;
+	}
+	to
+		schema_properties: Openapi!Property (
+			name <- cell.value,
+			content <- if lastTableRow->size() < firstTableRow->size() 
+				then thisModule.PropertyContent(firstTableRow->at(firstTableRow->indexOf(cell)))
+				else thisModule.PropertyContent(lastTableRow->at(firstTableRow->indexOf(cell)))
+				endif
+		)
+}
+
+lazy rule PropertyContent {
+	from
+		cell: Table!Cell
+	to
+		property_content: Openapi!PropertyContent (
+			type <- cell.type,
+			example <- cell.value
+		)
+}

@@ -1,0 +1,8 @@
+setup.py
+table_similarity/__init__.py
+table_similarity/table_similarity.py
+table_similarity.egg-info/PKG-INFO
+table_similarity.egg-info/SOURCES.txt
+table_similarity.egg-info/dependency_links.txt
+table_similarity.egg-info/requires.txt
+table_similarity.egg-info/top_level.txt
